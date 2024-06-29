@@ -34,6 +34,8 @@ const Login = () => {
             <img src={avatar.url || "./avatar.png "} alt="" />
             Upload an image
           </label>
+
+          
           <input
             type="file"
             id="file"

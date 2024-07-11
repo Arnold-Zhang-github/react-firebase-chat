@@ -1,62 +1,71 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import "./chatList.css";
+import AddUser from "./addUser/addUser";
+import { useUserStore } from "../../../lib/userStore";
+import { doc, onSnapshot } from "firebase/firestore";
 
 const ChatList = () => {
-  const [addMode, setAddMode] = useState(false);
-  return (
-    <div className="ChatList">
-      <div className="search">
-        <div className="searchBar">
-          <img src="/search.png" alt="" />
-          <input type="text" placeholder="Search" />
-        </div>
+   const [addMode, setAddMode] = useState(false);
+   const [chats, setChats] = useState([]);
 
-        <img
-          src={addMode ? "./minus.png" : "./plus.png"}
-          alt=""
-          className="add"
-          onClick={() => setAddMode((prev) => !prev)}
-        />
-      </div>
-      <div className="item">
-        <img src="./avatar.png" alt="" />
-        <div className="texts">
-          <span>Jane Doe</span>
-          <p>Hello</p>
-        </div>
-      </div>
+   const { currentUser } = useUserStore();
 
-      <div className="item">
-        <img src="./avatar.png" alt="" />
-        <div className="texts">
-          <span>Jane Doe</span>
-          <p>Hello</p>
-        </div>
-      </div>
+   useEffect(() => {
+      const unsub = onSnapshot(doc(db, "cities", "SF"), (doc) => {
+         console.log("Current data: ", doc.data());
+      });
+   }, []);
 
-      <div className="item">
-        <img src="./avatar.png" alt="" />
-        <div className="texts">
-          <span>Jane Doe</span>
-          <p>Hello</p>
-        </div>
+   return (
+      <div className="ChatList">
+         <div className="search">
+            <div className="searchBar">
+               <img src="/search.png" alt="" />
+               <input type="text" placeholder="Search" />
+            </div>
+
+            <img src={addMode ? "./minus.png" : "./plus.png"} alt="" className="add" onClick={() => setAddMode((prev) => !prev)} />
+         </div>
+         <div className="item">
+            <img src="./avatar.png" alt="" />
+            <div className="texts">
+               <span>Jane Doe</span>
+               <p>Hello</p>
+            </div>
+         </div>
+
+         <div className="item">
+            <img src="./avatar.png" alt="" />
+            <div className="texts">
+               <span>Jane Doe</span>
+               <p>Hello</p>
+            </div>
+         </div>
+
+         <div className="item">
+            <img src="./avatar.png" alt="" />
+            <div className="texts">
+               <span>Jane Doe</span>
+               <p>Hello</p>
+            </div>
+         </div>
+         <div className="item">
+            <img src="./avatar.png" alt="" />
+            <div className="texts">
+               <span>Jane Doe</span>
+               <p>Hello</p>
+            </div>
+         </div>
+         <div className="item">
+            <img src="./avatar.png" alt="" />
+            <div className="texts">
+               <span>Jane Doe</span>
+               <p>Hello</p>
+            </div>
+         </div>
+         {addMode && <AddUser />}
       </div>
-      <div className="item">
-        <img src="./avatar.png" alt="" />
-        <div className="texts">
-          <span>Jane Doe</span>
-          <p>Hello</p>
-        </div>
-      </div>
-      <div className="item">
-        <img src="./avatar.png" alt="" />
-        <div className="texts">
-          <span>Jane Doe</span>
-          <p>Hello</p>
-        </div>
-      </div>
-    </div>
-  );
+   );
 };
 
 export default ChatList;
